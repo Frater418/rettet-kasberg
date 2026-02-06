@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rettet den Kasberg!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Poppins', sans-serif; color: #fff; background: #0a1525; overflow-x: hidden; }
+
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,20,60,0.4), rgba(0,10,30,0.75)),
+      url('https://images.unsplash.com/photo-1551524559-8af4e6624178?w=1600') center/cover;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 2rem;
+  }
+  .hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1rem; text-shadow: 2px 4px 20px rgba(0,0,0,0.6); }
+  .hero h1 span { color: #64b5f6; }
+  .hero p { font-size: clamp(1rem, 2.5vw, 1.3rem); max-width: 700px; margin-bottom: 2rem; opacity: 0.9; }
+  .btn { display: inline-block; padding: 1rem 2.5rem; background: #1e88e5; color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; border-radius: 50px; transition: all 0.3s; box-shadow: 0 4px 20px rgba(30,136,229,0.4); }
+  .btn:hover { background: #1565c0; transform: translateY(-2px); }
+
+  .info-bar {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    padding: 3rem 2rem;
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; text-align: center;
+  }
+  .info-box { min-width: 180px; }
+  .info-box .num { font-size: 2.5rem; font-weight: 900; }
+  .info-box .label { font-size: 0.9rem; opacity: 0.8; margin-top: 0.3rem; }
+
+  .section { padding: 5rem 2rem; }
+  .section h2 { text-align: center; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 3rem; }
+
+  .about { background: linear-gradient(135deg, #0d1b2a, #1b2838); }
+  .about-content { max-width: 900px; margin: 0 auto; }
+  .about-content p { font-size: 1.05rem; line-height: 1.8; opacity: 0.9; margin-bottom: 1.5rem; }
+
+  .reasons { background: #0a1525; }
+  .reasons-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .reason-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 2rem; transition: transform 0.3s;
+  }
+  .reason-card:hover { transform: translateY(-5px); }
+  .reason-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .reason-card h3 { font-size: 1.2rem; margin-bottom: 0.8rem; color: #64b5f6; }
+  .reason-card p { opacity: 0.8; line-height: 1.6; font-size: 0.95rem; }
+
+  .crisis { background: linear-gradient(135deg, #2a0a0a, #1a0a0a); padding: 5rem 2rem; }
+  .crisis h2 { color: #ef5350; text-align: center; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 3rem; }
+  .crisis-items { max-width: 800px; margin: 0 auto; }
+  .crisis-item {
+    background: rgba(239,83,80,0.1); border: 1px solid rgba(239,83,80,0.2);
+    border-radius: 16px; padding: 1.5rem 2rem; margin-bottom: 1.5rem;
+  }
+  .crisis-item h3 { color: #ef9a9a; margin-bottom: 0.5rem; }
+  .crisis-item p { opacity: 0.8; line-height: 1.6; }
+
+  .help { background: linear-gradient(135deg, #0d1b2a, #1b2838); }
+  .help-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem; max-width: 1000px; margin: 0 auto;
+  }
+  .help-item {
+    background: rgba(30,136,229,0.1); border: 1px solid rgba(30,136,229,0.3);
+    border-radius: 16px; padding: 1.5rem; text-align: center;
+  }
+  .help-item .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .help-item h3 { color: #64b5f6; margin-bottom: 0.5rem; }
+  .help-item p { opacity: 0.8; font-size: 0.9rem; line-height: 1.5; }
+
+  .cta {
+    padding: 5rem 2rem;
+    background: linear-gradient(rgba(0,20,60,0.6), rgba(0,10,30,0.8)),
+      url('https://images.unsplash.com/photo-1486673748761-a8d18475c757?w=1600') center/cover;
+    text-align: center;
+  }
+  .cta h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+  .cta p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; }
+  .btn-big { padding: 1.2rem 3rem; font-size: 1.3rem; background: #e53935; box-shadow: 0 4px 25px rgba(229,57,53,0.4); }
+  .btn-big:hover { background: #c62828; }
+  .btn-secondary { background: #1e88e5; margin-left: 1rem; box-shadow: 0 4px 25px rgba(30,136,229,0.4); }
+  .btn-secondary:hover { background: #1565c0; }
+  .cta-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+
+  .petition { background: #0d47a1; padding: 3rem 2rem; text-align: center; }
+  .petition h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .petition p { opacity: 0.9; margin-bottom: 1.5rem; }
+  .petition .num { font-size: 3rem; font-weight: 900; color: #bbdefb; }
+
+  footer { background: #050d18; padding: 2rem; text-align: center; opacity: 0.6; font-size: 0.85rem; }
+  footer a { color: #64b5f6; }
+
+  @media (max-width: 600px) {
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .btn-secondary { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Rettet den <span>Kasberg!</span></h1>
+  <p>Das beliebte Familienskigebiet im Almtal ist bedroht. Ohne Unterstützung droht die Schließung — für immer. Gemeinsam können wir das verhindern.</p>
+  <a href="#helfen" class="btn">⛷️ Jetzt unterstützen</a>
+</section>
+
+<div class="info-bar">
+  <div class="info-box">
+    <div class="num">📍</div>
+    <div class="label">Grünau im Almtal<br>Oberösterreich</div>
+  </div>
+  <div class="info-box">
+    <div class="num">~30.000</div>
+    <div class="label">Unterschriften für<br>die Rettung</div>
+  </div>
+  <div class="info-box">
+    <div class="num">69 Mio. €</div>
+    <div class="label">Wertschöpfung laut<br>JKU-Studie</div>
+  </div>
+  <div class="info-box">
+    <div class="num">seit 1956</div>
+    <div class="label">Tradition im<br>Almtal</div>
+  </div>
+</div>
+
+<section class="section about">
+  <h2>🏔️ Was ist der Kasberg?</h2>
+  <div class="about-content">
+    <p>Der <strong>Kasberg</strong> ist ein Familienskigebiet in <strong>Grünau im Almtal</strong>, Oberösterreich. Seit fast 70 Jahren ist er das Herzstück der Region — ein Ort, wo Generationen von Kindern das Skifahren gelernt haben, wo Familien ihre Winter verbringen und wo die lokale Wirtschaft lebt.</p>
+    <p>Mit seinen sanften Pisten, Kinderskikursen und der einzigartigen Almtal-Landschaft ist der Kasberg kein Luxus-Resort, sondern <strong>ein Skigebiet für alle</strong> — leistbar, familiär und tief verwurzelt in der Gemeinschaft.</p>
+    <p>Doch jetzt steht alles auf dem Spiel.</p>
+  </div>
+</section>
+
+<section class="crisis">
+  <h2>⚠️ Warum ist der Kasberg bedroht?</h2>
+  <div class="crisis-items">
+    <div class="crisis-item">
+      <h3>💰 Finanzielle Probleme</h3>
+      <p>Veraltete Infrastruktur und steigende Betriebskosten belasten das Skigebiet. Die Beschneiungsanlage ist veraltet, was in der Saison 2024/25 zu einer dreiwöchigen Verzögerung der Eröffnung führte.</p>
+    </div>
+    <div class="crisis-item">
+      <h3>🏛️ Politische Verzögerungen</h3>
+      <p>Trotz eines seit Juli 2023 eingebrachten Rettungsplans im Landtag und einer Petition mit ~30.000 Unterschriften zögert die Landesregierung. Eine externe Prüfung läuft, deren Ergebnisse erst nach dem ersten Quartal 2026 erwartet werden.</p>
+    </div>
+    <div class="crisis-item">
+      <h3>⏰ Die Zeit läuft ab</h3>
+      <p>Ohne schnelle Entscheidungen und Investitionen droht der dauerhafte Verlust des Skigebiets. Was einmal geschlossen wird, öffnet selten wieder.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section reasons">
+  <h2>💙 Warum der Kasberg gerettet werden muss</h2>
+  <div class="reasons-grid">
+    <div class="reason-card">
+      <div class="icon">👨‍👩‍👧‍👦</div>
+      <h3>Familienskigebiet</h3>
+      <p>Der Kasberg ist DAS Skigebiet für Familien. Leistbare Preise, Kinderskikurse und eine familiäre Atmosphäre — perfekt für den ersten Kontakt mit dem Schnee.</p>
+    </div>
+    <div class="reason-card">
+      <div class="icon">💼</div>
+      <h3>Arbeitsplätze</h3>
+      <p>Dutzende direkte Arbeitsplätze und hunderte in der Region hängen am Kasberg — Hotels, Gasthäuser, Skischulen, Sportgeschäfte.</p>
+    </div>
+    <div class="reason-card">
+      <div class="icon">💶</div>
+      <h3>69 Mio. € Wertschöpfung</h3>
+      <p>Laut einer JKU-Studie generiert der Kasberg 69 Millionen Euro Wertschöpfung für die Region. Eine Schließung wäre ein wirtschaftlicher Kahlschlag.</p>
+    </div>
+    <div class="reason-card">
+      <div class="icon">🏠</div>
+      <h3>Lebensqualität</h3>
+      <p>Ohne den Kasberg verliert das Almtal seinen wichtigsten Winter-Anziehungspunkt. Junge Familien ziehen weg, Vereine sterben aus.</p>
+    </div>
+    <div class="reason-card">
+      <div class="icon">🎿</div>
+      <h3>Tradition seit 1956</h3>
+      <p>Fast 70 Jahre Skigeschichte. Generationen haben hier ihre ersten Schwünge gemacht. Diese Tradition darf nicht sterben.</p>
+    </div>
+    <div class="reason-card">
+      <div class="icon">🌲</div>
+      <h3>Natur & Tourismus</h3>
+      <p>Der Kasberg ist nicht nur ein Skigebiet — er ist Wander-, Bike- und Naturerlebnis. Ganzjahrestourismus hat enormes Potenzial.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section help" id="helfen">
+  <h2>💪 So kannst DU helfen</h2>
+  <div class="help-grid">
+    <div class="help-item">
+      <div class="icon">🎫</div>
+      <h3>Saisonkarte kaufen</h3>
+      <p>Jede verkaufte Karte ist ein Signal: Wir stehen zum Kasberg! Infos unter kasberg.at</p>
+    </div>
+    <div class="help-item">
+      <div class="icon">⛷️</div>
+      <h3>Hinfahren!</h3>
+      <p>Jeder Besuch zählt. Bring Freunde und Familie mit — zeig, dass der Kasberg gebraucht wird.</p>
+    </div>
+    <div class="help-item">
+      <div class="icon">📢</div>
+      <h3>Teilen & Reden</h3>
+      <p>Erzähl von der Situation! Teile diese Website, unterschreibe Petitionen, sprich mit Politikern.</p>
+    </div>
+    <div class="help-item">
+      <div class="icon">❤️</div>
+      <h3>Spenden</h3>
+      <p>Unterstütze Organisationen die sich für den Erhalt von Skigebieten und Naturräumen einsetzen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="petition">
+  <div class="num">~30.000</div>
+  <h3>Menschen haben bereits unterschrieben</h3>
+  <p>Die Petition für die Rettung des Kasbergs zeigt: Die Region steht zusammen!</p>
+</section>
+
+<section class="cta" id="spenden">
+  <h2>🏔️ Der Kasberg braucht dich!</h2>
+  <p>Hilf mit, dieses einzigartige Familienskigebiet zu retten. Jede Stimme, jeder Besuch und jede Spende macht einen Unterschied.</p>
+  <div class="cta-buttons">
+    <a href="https://mein.aufstehn.at/petitions/skigebiet-kasberg-erhalten-nachhaltig-weiterfuhren-1" target="_blank" class="btn btn-big">✍️ Petition unterschreiben</a>
+    <a href="https://kasberg.at" target="_blank" class="btn btn-secondary">🎫 kasberg.at besuchen</a>
+  </div>
+  <p style="margin-top:1.5rem; font-size:0.85rem; opacity:0.5;">Saisonkarten & Infos: kassa@kasberg.at</p>
+</section>
+
+<footer>
+  <p>Quellen: Krone.at, OÖ Nachrichten, Tips.at, JKU-Studie, kasberg.at</p>
+  <p>Erstellt für ein Schulprojekt · <a href="https://kasberg.at" target="_blank">kasberg.at</a></p>
+</footer>
+
+</body>
+</html>
